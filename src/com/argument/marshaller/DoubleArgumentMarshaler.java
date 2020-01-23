@@ -6,12 +6,23 @@ import java.util.*;
 
 import com.argument.exception.ArgumentException;
 
+public class DoubleArgumentMarshaler implements IArgumentMarshaler {
+	public static double getValue(IArgumentMarshaler am) {
+		
+		double doubleArgValue = 0.0;
+		
+		if (am instanceof DoubleArgumentMarshaler) {
+			doubleArgValue = ((DoubleArgumentMarshaler) am).doubleValue;
+		}
+		
+		return doubleArgValue;
+	}
 
-public class DoubleArgumentMarshaler implements ArgumentMarshaler {
 	private double doubleValue = 0;
 
 	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
 		String parameter = null;
+		
 		try {
 			parameter = currentArgument.next();
 			doubleValue = Double.parseDouble(parameter);
@@ -20,13 +31,5 @@ public class DoubleArgumentMarshaler implements ArgumentMarshaler {
 		} catch (NumberFormatException e) {
 			throw new ArgumentException(ErrorCode.INVALID_DOUBLE, parameter);
 		}
-	}
-
-	public static double getValue(ArgumentMarshaler am) {
-		double doubleArgValue = 0.0;
-		if (am instanceof DoubleArgumentMarshaler) {
-			doubleArgValue = ((DoubleArgumentMarshaler) am).doubleValue;
-		}
-		return doubleArgValue;
 	}
 }

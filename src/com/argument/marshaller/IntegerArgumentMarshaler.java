@@ -7,11 +7,24 @@ import com.argument.exception.ArgumentException;
 
 import static com.argument.exception.ArgumentException.ErrorCode;
 
-public class IntegerArgumentMarshaler implements ArgumentMarshaler {
+public class IntegerArgumentMarshaler implements IArgumentMarshaler {
+	
 	private int intValue = 0;
+	
+	public static int getValue(IArgumentMarshaler am) {
+		
+		int integerArgValue = 0;
+		
+		if (am instanceof IntegerArgumentMarshaler) {
+			integerArgValue = ((IntegerArgumentMarshaler) am).intValue;
+		}
+		
+		return integerArgValue;
+	}
 
 	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
 		String parameter = null;
+		
 		try {
 			parameter = currentArgument.next();
 			intValue = Integer.parseInt(parameter);
@@ -20,13 +33,5 @@ public class IntegerArgumentMarshaler implements ArgumentMarshaler {
 		} catch (NumberFormatException e) {
 			throw new ArgumentException(ErrorCode.INVALID_INTEGER, parameter);
 		}
-	}
-
-	public static int getValue(ArgumentMarshaler am) {
-		int integerArgValue = 0;
-		if (am instanceof IntegerArgumentMarshaler) {
-			integerArgValue = ((IntegerArgumentMarshaler) am).intValue;
-		}
-		return integerArgValue;
 	}
 }

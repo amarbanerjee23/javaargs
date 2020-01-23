@@ -7,8 +7,20 @@ import java.util.NoSuchElementException;
 
 import com.argument.exception.ArgumentException;
 
-public class StringArgumentMarshaler implements ArgumentMarshaler {
+public class StringArgumentMarshaler implements IArgumentMarshaler {
+	
 	private String stringValue = "";
+	
+	public static String getValue(IArgumentMarshaler am) {
+		
+		String stringValue = "";
+		
+		if (am instanceof StringArgumentMarshaler) {
+			stringValue = ((StringArgumentMarshaler) am).stringValue;
+		}
+		
+		return stringValue;
+	}
 
 	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
 		try {
@@ -16,12 +28,5 @@ public class StringArgumentMarshaler implements ArgumentMarshaler {
 		} catch (NoSuchElementException e) {
 			throw new ArgumentException(MISSING_STRING);
 		}
-	}
-
-	public static String getValue(ArgumentMarshaler am) {
-		if (am != null && am instanceof StringArgumentMarshaler)
-			return ((StringArgumentMarshaler) am).stringValue;
-		else
-			return "";
 	}
 }

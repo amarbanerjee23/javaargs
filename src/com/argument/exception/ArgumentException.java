@@ -6,27 +6,42 @@ public class ArgumentException extends Exception {
 	 * arguments
 	 */
 	public enum ErrorCode {
-		OK, INVALID_ARGUMENT_FORMAT, UNEXPECTED_ARGUMENT, INVALID_ARGUMENT_NAME, MISSING_STRING, MISSING_INTEGER,
-		INVALID_INTEGER, MISSING_DOUBLE, MALFORMED_MAP, MISSING_MAP, INVALID_DOUBLE
+		OK, 
+		INVALID_ARGUMENT_FORMAT, 
+		UNEXPECTED_ARGUMENT, 
+		INVALID_ARGUMENT_NAME,
+		MISSING_STRING, 
+		MISSING_INTEGER,
+		INVALID_INTEGER, 
+		MISSING_DOUBLE, 
+		MALFORMED_MAP, 
+		MISSING_MAP, 
+		INVALID_DOUBLE
 	}
 
 	private char errorArgumentId = '\0';
-	private String errorParameter = null;
-
+	
 	private ErrorCode errorCode = ErrorCode.OK;
+	
+	private String errorParameter = null;
 
 	public ArgumentException(final ErrorCode errorCode) {
 		this.errorCode = errorCode;
 	}
 
 	public ArgumentException(final ErrorCode errorCode, final char errorArgumentId, final String errorParameter) {
+
 		this.errorCode = errorCode;
+
 		this.errorParameter = errorParameter;
+
 		this.errorArgumentId = errorArgumentId;
 	}
 
 	public ArgumentException(final ErrorCode errorCode, final String errorParameter) {
+
 		this.errorCode = errorCode;
+
 		this.errorParameter = errorParameter;
 	}
 
@@ -34,20 +49,17 @@ public class ArgumentException extends Exception {
 		super(message);
 	}
 
-	public ErrorCode getErrorCode() {
-		return errorCode;
-	}
-
 	public char getErrorArgumentId() {
 		return errorArgumentId;
 	}
 
-	public String getErrorParameter() {
-		return errorParameter;
+	public ErrorCode getErrorCode() {
+		return errorCode;
 	}
 
 	public String getErrorMessage() {
 		String errorMessage = "";
+
 		switch (errorCode) {
 		case OK: {
 			errorMessage = "TILT: Should not get here.";
@@ -100,7 +112,12 @@ public class ArgumentException extends Exception {
 			break;
 		}
 		}
+
 		return errorMessage;
+	}
+
+	public String getErrorParameter() {
+		return errorParameter;
 	}
 
 	public void setErrorArgumentId(final char errorArgumentId) {

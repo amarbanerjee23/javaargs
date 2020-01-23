@@ -42,4 +42,25 @@ Coresponding command line: "-f -s Bob -n 1 -a 3.2 -p e1 -p e2 -p e3
 
 The source code makes use of the following clean coding prcatices:-
 
-+ 
+** Clean Code Practices in Source Code
+
+*** Package
++ The package names are named to convey the semantic categorisation for the classes inside the package.
+
+*** Imports
++ The imports inside the classes have been seperated into groups in the order.
+  - java libraries import
+  - java libraries static import
+  - local libraries
+  - local libraries static imports
+
+*** Class / Interface Name
++ The class interfaces names have been named to convey the semantic meaning of the operations / functions defined in the class.
++ The interface names start with an "I" to denote that the file contains the definition of an interface.
+
+*** Variables
++ The variables declared in the classes are arranged alphabetically, so enable reviewer go through each variable in sequence.
++ The variables are named to convey the semantic meaning and importance of the data to be stored.
++ Numbering is used in variables to enable quick and easy reading of the variables and understand their meanings
+
+

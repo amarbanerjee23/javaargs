@@ -4,7 +4,9 @@ import java.util.Iterator;
 
 import com.argument.exception.ArgumentException;
 
-public interface ArgumentMarshaler {
+public interface IArgumentMarshaler {
+	
 	void setArgument(Iterator<String> currentArgument) throws ArgumentException;
+	
 }
  

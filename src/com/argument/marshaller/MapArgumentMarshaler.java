@@ -9,14 +9,30 @@ import com.argument.exception.ArgumentException;
 
 import static com.argument.exception.ArgumentException.ErrorCode;
 
-public class MapArgumentMarshaler implements ArgumentMarshaler {
+public class MapArgumentMarshaler implements IArgumentMarshaler {
+	
 	private Map<String, String> map = new HashMap<>();
+	
+	public static Map<String, String> getValue(IArgumentMarshaler am) {
+		
+		Map<String, String> mapArgValue = new HashMap<>();
+		
+		if (am instanceof MapArgumentMarshaler) {
+			mapArgValue = ((MapArgumentMarshaler) am).map;
+		}
+		
+		return mapArgValue;
+	}
 
 	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
 		try {
+		
 			String[] mapEntries = currentArgument.next().split(",");
+			
 			for (String entry : mapEntries) {
+				
 				String[] entryComponents = entry.split(":");
+			
 				if (entryComponents.length != 2) {
 					throw new ArgumentException(ErrorCode.MALFORMED_MAP);
 				} else {
@@ -26,13 +42,5 @@ public class MapArgumentMarshaler implements ArgumentMarshaler {
 		} catch (NoSuchElementException e) {
 			throw new ArgumentException(ErrorCode.MISSING_MAP);
 		}
-	}
-
-	public static Map<String, String> getValue(ArgumentMarshaler am) {
-		Map<String, String> mapArgValue = new HashMap<>();
-		if (am instanceof MapArgumentMarshaler) {
-			mapArgValue = ((MapArgumentMarshaler) am).map;
-		}
-		return mapArgValue;
 	}
 }

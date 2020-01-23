@@ -84,8 +84,7 @@ The source code makes use of the following clean coding prcatices:-
  in the function.
 + Every statement for variable declaration, data assignment, function call has been spaced to enable the reader to easily identify the order of
 execution.
-+ All logical, loop and switch constructs have been seperated from the single line operational code, to create a direct seperatcion of 
-what constructs have been used in the functions.
++ All logical, loop and switch constructs have been seperated from the single line operational code, to create a direct seperation of concerns.
 + All methods are sorted in the following order of precedence
   - The order in which the functions are invoked. For e.g., if A invokes B and B invokes C, then the order of the functions in the class will be
     A - B - C

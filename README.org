@@ -56,7 +56,7 @@ The source code makes use of the following clean coding prcatices:-
 
 *** Class / Interface Name
 + The class interfaces names have been named to convey the semantic meaning of the operations / functions defined in the class.
-+ The interface names start with an "I" to denote that the file contains the definition of an interface.
++ The interface names start with an "\textit{I}" to denote that the file contains the definition of an interface.
 
 *** Variables
 + The variables declared in the classes are arranged alphabetically, so enable reviewer go through each variable in sequence.

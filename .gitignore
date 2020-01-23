@@ -1,7 +1,2 @@
-.idea
-build
-*.iml
-out
-classes
-getopts.i*
-
+/bin
+/build.xml

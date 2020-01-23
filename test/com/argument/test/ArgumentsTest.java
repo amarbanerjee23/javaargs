@@ -1,4 +1,4 @@
-package com.cleancoder.args;
+package com.argument.test;
 
 import java.util.Map;
 import org.junit.Test;

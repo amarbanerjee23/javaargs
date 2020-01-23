@@ -1,4 +1,4 @@
-package com.cleancoder.args;
+package com.argument.test;
 
 import static com.argument.exception.ArgumentException.ErrorCode;
 

@@ -3,11 +3,14 @@ package com.argument.test;
 import java.util.Map;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 import com.argument.Argument;
 import com.argument.exception.ArgumentException;
 
 import static com.argument.exception.ArgumentException.ErrorCode.*;
-import static org.junit.Assert.*;
+
+
 
 public class ArgumentsTest {
 

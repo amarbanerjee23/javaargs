@@ -1,10 +1,10 @@
 package com.argument.test;
 
-import static com.argument.exception.ArgumentException.ErrorCode;
+import junit.framework.TestCase;
 
 import com.argument.exception.ArgumentException;
 
-import junit.framework.TestCase;
+import static com.argument.exception.ArgumentException.ErrorCode;
 
 public class ArgumentsExceptionMessageTest extends TestCase {
 	public void testErrorMessageForUnexpectedArgException() throws Exception {

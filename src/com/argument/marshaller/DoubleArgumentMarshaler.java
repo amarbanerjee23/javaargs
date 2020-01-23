@@ -10,7 +10,7 @@ import com.argument.exception.ArgumentException;
 public class DoubleArgumentMarshaler implements ArgumentMarshaler {
 	private double doubleValue = 0;
 
-	public void set(Iterator<String> currentArgument) throws ArgumentException {
+	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
 		String parameter = null;
 		try {
 			parameter = currentArgument.next();

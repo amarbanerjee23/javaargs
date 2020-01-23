@@ -12,7 +12,7 @@ import static com.argument.exception.ArgumentException.ErrorCode;
 public class MapArgumentMarshaler implements ArgumentMarshaler {
 	private Map<String, String> map = new HashMap<>();
 
-	public void set(Iterator<String> currentArgument) throws ArgumentException {
+	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
 		try {
 			String[] mapEntries = currentArgument.next().split(",");
 			for (String entry : mapEntries) {

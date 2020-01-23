@@ -13,7 +13,7 @@ import static com.argument.exception.ArgumentException.ErrorCode;
 public class StringArrayArgumentMarshaler implements ArgumentMarshaler {
 	private final List<String> strings = new ArrayList<>();
 
-	public void set(Iterator<String> currentArgument) throws ArgumentException {
+	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
 		try {
 			strings.add(currentArgument.next());
 		} catch (NoSuchElementException e) {

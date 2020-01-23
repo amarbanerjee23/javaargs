@@ -10,7 +10,7 @@ import com.argument.exception.ArgumentException;
 public class StringArgumentMarshaler implements ArgumentMarshaler {
 	private String stringValue = "";
 
-	public void set(Iterator<String> currentArgument) throws ArgumentException {
+	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
 		try {
 			stringValue = currentArgument.next();
 		} catch (NoSuchElementException e) {

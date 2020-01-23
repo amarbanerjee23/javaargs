@@ -1,19 +1,5 @@
 package com.argument;
 
-//java static imports
-import static com.argument.exception.ArgumentException.ErrorCode;
-
-// local package imports
-import com.argument.exception.ArgumentException;
-import com.argument.marshaller.ArgumentMarshaler;
-import com.argument.marshaller.BooleanArgumentMarshaler;
-import com.argument.marshaller.DoubleArgumentMarshaler;
-import com.argument.marshaller.IntegerArgumentMarshaler;
-import com.argument.marshaller.MapArgumentMarshaler;
-import com.argument.marshaller.StringArgumentMarshaler;
-import com.argument.marshaller.StringArrayArgumentMarshaler;
-
-// java library imports
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +10,18 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.argument.exception.ArgumentException;
+import com.argument.marshaller.ArgumentMarshaler;
+import com.argument.marshaller.BooleanArgumentMarshaler;
+import com.argument.marshaller.DoubleArgumentMarshaler;
+import com.argument.marshaller.IntegerArgumentMarshaler;
+import com.argument.marshaller.MapArgumentMarshaler;
+import com.argument.marshaller.StringArgumentMarshaler;
+import com.argument.marshaller.StringArrayArgumentMarshaler;
+
+import static com.argument.exception.ArgumentException.ErrorCode;
+
+// This class parses arguments to assign types to the arguments.
 public class Argument {
 	private Map<Character, ArgumentMarshaler> argMarshallerMap;
 	private Set<Character> identfiedArguments;
@@ -51,17 +49,16 @@ public class Argument {
 		for (int i = 0; i < argChars.length(); i++) {
 			parseIndividualArgumentCharacter(argChars.charAt(i));
 		}
-	}  
-	
+	}
+
 	private void parseIndividualArgumentCharacter(final char argChar) throws ArgumentException {
-		final ArgumentMarshaler localMarshaller = argMarshallerMap.get(argChar);
-		Optional<ArgumentMarshaler> localMarshallerExists = Optional.of(localMarshaller);
+		Optional<ArgumentMarshaler> localMarshallerExists = Optional.of(argMarshallerMap.get(argChar));
 		if (localMarshallerExists.isEmpty()) {
 			throw new ArgumentException(ErrorCode.UNEXPECTED_ARGUMENT, argChar, null);
 		} else {
 			identfiedArguments.add(argChar);
 			try {
-				localMarshallerExists.get().set(currentArgument);
+				localMarshallerExists.get().setArgument(currentArgument);
 			} catch (ArgumentException e) {
 				e.setErrorArgumentId(argChar);
 				throw e;
@@ -80,7 +77,7 @@ public class Argument {
 	}
 
 	public boolean getBoolean(final char booleanArg) {
-		return BooleanArgumentMarshaler.getValue(argMarshallerMap.get(booleanArg));
+		return BooleanArgumentMarshaler.getBooleanValue(argMarshallerMap.get(booleanArg));
 	}
 
 	public double getDouble(final char doubleArg) {

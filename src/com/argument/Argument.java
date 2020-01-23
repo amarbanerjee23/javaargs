@@ -51,7 +51,7 @@ public class Argument {
 		for (int i = 0; i < argChars.length(); i++) {
 			parseIndividualArgumentCharacter(argChars.charAt(i));
 		}
-	}
+	}  
 	
 	private void parseIndividualArgumentCharacter(final char argChar) throws ArgumentException {
 		final ArgumentMarshaler localMarshaller = argMarshallerMap.get(argChar);

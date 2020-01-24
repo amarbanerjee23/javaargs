@@ -1,12 +1,11 @@
-#+TITLE
- Assignment 1 -  The Art of Clean Code
-#+AUTHOR
+*  Assignment 1 -  The Art of Clean Code
+** Submission by
 Amar Banerjee
 Roll No. 2018801016
-#+COURSE
+** Course
 Software Engineering - Spring 2019
 
-* Disclaimer
+** Disclaimer
 
 This code has been orginally forked from the Args program described in: http://butunclebob.com/ArticleS.UncleBob.CleanCodeArgs. I have further tried
 to implement a clean coding practice on this source code written in Java.

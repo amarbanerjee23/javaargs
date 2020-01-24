@@ -1,3 +1,11 @@
+#+TITLE Assignment 1
+ The Art of Clean Code
+#+AUTHOR
+Amar Banerjee
+Roll No. 2018801016
+#+COURSE
+Software Engineering - Spring 2019
+
 * Disclaimer
 
 This code has been orginally forked from the Args program described in: http://butunclebob.com/ArticleS.UncleBob.CleanCodeArgs. I have further tried
@@ -94,4 +102,5 @@ execution.
 + For the methods which return a value, the returned variable name is kept consistent with the method objective to enable 
 intutive realisation of the returned value and its meaning
 + Multiple / nested if-else constructs, have been replaced by switch statements, to enable better understading of multiple consitional blocks.
++ 
 

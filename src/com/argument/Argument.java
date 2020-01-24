@@ -48,7 +48,6 @@ public class Argument {
 				currentArgument.previous();
 				break;
 			}
-
 		}
 	}
 

@@ -43,7 +43,7 @@ public class Argument {
 			final String argString = currentArgument.next();
 
 			if (argString.startsWith("-")) {
-				parseArgumentCharactersInString(argString.substring(1));
+				updateIdentifiedArgumentSet(argString.substring(1));
 			} else {
 				currentArgument.previous();
 				break;
@@ -52,33 +52,30 @@ public class Argument {
 		}
 	}
 
-	private void parseArgumentCharactersInString(final String argChars) throws ArgumentException {
+	private void updateIdentifiedArgumentSet(final String argChars) throws ArgumentException {
 		for (int i = 0; i < argChars.length(); i++) {
+			
+			char argChar = argChars.charAt(i);
+			
+			IArgumentMarshaler localMarshaller = argMarshallerMap.get(argChar);
 
-			parseIndividualArgumentCharacter(argChars.charAt(i));
+			if (localMarshaller == null) {
+				throw new ArgumentException(ErrorCode.UNEXPECTED_ARGUMENT, argChar, null);
+			} else {
+				identfiedArguments.add(argChar);
+				try {
+					localMarshaller.setArgument(currentArgument);
+				} catch (ArgumentException e) {
+					e.setErrorArgumentId(argChar);
+					throw e;
+				}
 
-		}
-	}
-
-	private void parseIndividualArgumentCharacter(final char argChar) throws ArgumentException {
-
-		IArgumentMarshaler localMarshaller = argMarshallerMap.get(argChar);
-
-		if (localMarshaller == null) {
-			throw new ArgumentException(ErrorCode.UNEXPECTED_ARGUMENT, argChar, null);
-		} else {
-			identfiedArguments.add(argChar);
-			try {
-				
-				localMarshaller.setArgument(currentArgument);
-				
-			} catch (ArgumentException e) {
-				e.setErrorArgumentId(argChar);
-				throw e;
 			}
 
 		}
 	}
+
+	
 
 	private Map<Character, IArgumentMarshaler> getArgumentMarshallersMap(final String schema) throws ArgumentException {
 

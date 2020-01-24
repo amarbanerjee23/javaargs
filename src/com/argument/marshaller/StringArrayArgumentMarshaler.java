@@ -10,15 +10,15 @@ import com.argument.exception.ArgumentException;
 import static com.argument.exception.ArgumentException.ErrorCode;
 
 public class StringArrayArgumentMarshaler implements IArgumentMarshaler {
+
+	private final List<String> stringArrayValueList = new ArrayList<>();
 	
-	private final List<String> strings = new ArrayList<>();
-	
-	public static String[] getValue(IArgumentMarshaler am) {
+	public static String[] getValue(IArgumentMarshaler marshaller) {
 		
 		String[] strValue = new String[0];
 		
-		if (am instanceof StringArrayArgumentMarshaler) {
-			strValue = ((StringArrayArgumentMarshaler) am).strings.toArray(new String[0]);
+		if (marshaller instanceof StringArrayArgumentMarshaler) {
+			strValue = ((StringArrayArgumentMarshaler) marshaller).stringArrayValueList.toArray(new String[0]);
 		}
 		
 		return strValue;
@@ -27,7 +27,7 @@ public class StringArrayArgumentMarshaler implements IArgumentMarshaler {
 
 	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
 		try {
-			strings.add(currentArgument.next());
+			stringArrayValueList.add(currentArgument.next());
 		} catch (NoSuchElementException e) {
 			throw new ArgumentException(ErrorCode.MISSING_STRING);
 		}

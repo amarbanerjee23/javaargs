@@ -7,12 +7,12 @@ import java.util.*;
 import com.argument.exception.ArgumentException;
 
 public class DoubleArgumentMarshaler implements IArgumentMarshaler {
-	public static double getValue(IArgumentMarshaler am) {
+	public static double getValue(IArgumentMarshaler marshaller) {
 		
 		double doubleArgValue = 0.0;
 		
-		if (am instanceof DoubleArgumentMarshaler) {
-			doubleArgValue = ((DoubleArgumentMarshaler) am).doubleValue;
+		if (marshaller instanceof DoubleArgumentMarshaler) {
+			doubleArgValue = ((DoubleArgumentMarshaler) marshaller).doubleValue;
 		}
 		
 		return doubleArgValue;

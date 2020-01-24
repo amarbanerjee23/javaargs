@@ -11,17 +11,17 @@ import static com.argument.exception.ArgumentException.ErrorCode;
 
 public class MapArgumentMarshaler implements IArgumentMarshaler {
 	
-	private Map<String, String> map = new HashMap<>();
+	private Map<String, String> mapValues = new HashMap<>();
 	
 	public static Map<String, String> getValue(IArgumentMarshaler am) {
 		
-		Map<String, String> mapArgValue = new HashMap<>();
+		Map<String, String> mapArgValues = new HashMap<>();
 		
 		if (am instanceof MapArgumentMarshaler) {
-			mapArgValue = ((MapArgumentMarshaler) am).map;
+			mapArgValues = ((MapArgumentMarshaler) am).mapValues;
 		}
 		
-		return mapArgValue;
+		return mapArgValues;
 	}
 
 	public void setArgument(Iterator<String> currentArgument) throws ArgumentException {
@@ -36,7 +36,7 @@ public class MapArgumentMarshaler implements IArgumentMarshaler {
 				if (entryComponents.length != 2) {
 					throw new ArgumentException(ErrorCode.MALFORMED_MAP);
 				} else {
-					map.put(entryComponents[0], entryComponents[1]);
+					mapValues.put(entryComponents[0], entryComponents[1]);
 				}
 			}
 		} catch (NoSuchElementException e) {

@@ -11,12 +11,12 @@ public class StringArgumentMarshaler implements IArgumentMarshaler {
 	
 	private String stringValue = "";
 	
-	public static String getValue(IArgumentMarshaler am) {
+	public static String getValue(IArgumentMarshaler marshaller) {
 		
 		String stringValue = "";
 		
-		if (am instanceof StringArgumentMarshaler) {
-			stringValue = ((StringArgumentMarshaler) am).stringValue;
+		if (marshaller instanceof StringArgumentMarshaler) {
+			stringValue = ((StringArgumentMarshaler) marshaller).stringValue;
 		}
 		
 		return stringValue;

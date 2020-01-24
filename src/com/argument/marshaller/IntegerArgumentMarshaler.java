@@ -11,12 +11,12 @@ public class IntegerArgumentMarshaler implements IArgumentMarshaler {
 	
 	private int intValue = 0;
 	
-	public static int getValue(IArgumentMarshaler am) {
+	public static int getValue(IArgumentMarshaler marshaller) {
 		
 		int integerArgValue = 0;
 		
-		if (am instanceof IntegerArgumentMarshaler) {
-			integerArgValue = ((IntegerArgumentMarshaler) am).intValue;
+		if (marshaller instanceof IntegerArgumentMarshaler) {
+			integerArgValue = ((IntegerArgumentMarshaler) marshaller).intValue;
 		}
 		
 		return integerArgValue;

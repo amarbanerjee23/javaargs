@@ -8,12 +8,12 @@ public class BooleanArgumentMarshaler implements IArgumentMarshaler {
 	
 	private boolean booleanArgValue = false;
 
-	public static boolean getBooleanValue(IArgumentMarshaler argMarshaller) {
+	public static boolean getBooleanValue(IArgumentMarshaler marshaller) {
 		
 		boolean booleanValue = false;
 		
-		if (argMarshaller instanceof BooleanArgumentMarshaler) {
-			booleanValue = ((BooleanArgumentMarshaler) argMarshaller).booleanArgValue;
+		if (marshaller instanceof BooleanArgumentMarshaler) {
+			booleanValue = ((BooleanArgumentMarshaler) marshaller).booleanArgValue;
 		}
 		
 		return booleanValue;

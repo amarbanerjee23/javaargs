@@ -45,7 +45,7 @@ public class ArgumentsExceptionMessageTest extends TestCase {
 	public void testErrorMessageForMalformedMapMessageException() throws Exception {
 		ArgumentException e = new ArgumentException(ErrorCode.MALFORMED_MAP, 'x', null);
 		assertEquals("Map string for -x is not of form k1:v1,k2:v2...", e.getErrorMessage());
-	}  
+	}
 
 	public void testErrorMessageForInvalidArgumentNameException() throws Exception {
 		ArgumentException e = new ArgumentException(ErrorCode.INVALID_ARGUMENT_NAME, '#', null);

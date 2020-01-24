@@ -1,12 +1,10 @@
 package com.argument;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,18 +19,18 @@ import com.argument.marshaller.StringArrayArgumentMarshaler;
 
 import static com.argument.exception.ArgumentException.ErrorCode;
 
-// This class parses arguments to assign types to the arguments.
+// This class parses arguments to assign types and add values to the arguments from the input strings.
 public class Argument {
 
 	private Map<Character, IArgumentMarshaler> argMarshallerMap;
-	
+
 	private ListIterator<String> currentArgument;
 
 	private Set<Character> identfiedArguments;
 
 	public Argument(final String schema, final String[] args) throws ArgumentException {
-		
-		argMarshallerMap = new ConcurrentHashMap<>(getArgMarshallersMap(schema));
+
+		argMarshallerMap = new ConcurrentHashMap<>(getArgumentMarshallersMap(schema));
 
 		identfiedArguments = new HashSet<>();
 
@@ -64,15 +62,16 @@ public class Argument {
 
 	private void parseIndividualArgumentCharacter(final char argChar) throws ArgumentException {
 
-		Optional<IArgumentMarshaler> localMarshallerExists = Optional.of(argMarshallerMap.get(argChar));
+		IArgumentMarshaler localMarshaller = argMarshallerMap.get(argChar);
 
-		if (localMarshallerExists.isEmpty()) {
+		if (localMarshaller == null) {
 			throw new ArgumentException(ErrorCode.UNEXPECTED_ARGUMENT, argChar, null);
 		} else {
 			identfiedArguments.add(argChar);
-
 			try {
-				localMarshallerExists.get().setArgument(currentArgument);
+				
+				localMarshaller.setArgument(currentArgument);
+				
 			} catch (ArgumentException e) {
 				e.setErrorArgumentId(argChar);
 				throw e;
@@ -81,14 +80,14 @@ public class Argument {
 		}
 	}
 
-	private Map<Character, IArgumentMarshaler> getArgMarshallersMap(final String schema) throws ArgumentException {
-		
+	private Map<Character, IArgumentMarshaler> getArgumentMarshallersMap(final String schema) throws ArgumentException {
+
 		final Map<Character, IArgumentMarshaler> argumentMarshallerPair = new ConcurrentHashMap<>();
-		
+
 		for (final String element : schema.split(",")) {
 
 			if (element.length() > 0) {
-				argumentMarshallerPair.putAll(getMarshallerPairForArgElement(element.trim()));
+				argumentMarshallerPair.putAll(getMarshallerPairForArgumentElement(element.trim()));
 			}
 
 		}
@@ -96,37 +95,57 @@ public class Argument {
 		return argumentMarshallerPair;
 	}
 
-	private Map<Character, IArgumentMarshaler> getMarshallerPairForArgElement(String element) throws ArgumentException {
+	private Map<Character, IArgumentMarshaler> getMarshallerPairForArgumentElement(String element)
+	        throws ArgumentException {
 
 		final char elementId = element.charAt(0);
 
 		final String elementTail = element.substring(1);
 
-		validateElementId(elementId);
+		if (isElementIdInvalid(elementId)) {
+			throw new ArgumentException(ErrorCode.INVALID_ARGUMENT_NAME, elementId, null);
+		}
 
 		return getArgMarshallerPair(elementId, elementTail);
-		
+
 	}
 
-	public Map<Character, IArgumentMarshaler> getArgMarshallerPair(char elementId,String elementTail) throws ArgumentException {
+	public Map<Character, IArgumentMarshaler> getArgMarshallerPair(char elementId, String elementTail)
+	        throws ArgumentException {
 		Map<Character, IArgumentMarshaler> localMarshalers = new ConcurrentHashMap<>();
-		
+
 		if (elementTail.length() == 0) {
 			localMarshalers.put(elementId, new BooleanArgumentMarshaler());
-		} else if (elementTail.equals("*")) {
-			localMarshalers.put(elementId, new StringArgumentMarshaler());
-		} else if (elementTail.equals("#")) {
-			localMarshalers.put(elementId, new IntegerArgumentMarshaler());
-		} else if (elementTail.equals("##")) {
-			localMarshalers.put(elementId, new DoubleArgumentMarshaler());
-		} else if (elementTail.equals("[*]")) {
-			localMarshalers.put(elementId, new StringArrayArgumentMarshaler());
-		} else if (elementTail.equals("&")) {
-			localMarshalers.put(elementId, new MapArgumentMarshaler());
 		} else {
-			throw new ArgumentException(ErrorCode.INVALID_ARGUMENT_FORMAT, elementId, elementTail);
+
+			switch (elementTail) {
+			case "*": {
+				localMarshalers.put(elementId, new StringArgumentMarshaler());
+				break;
+			}
+			case "#": {
+				localMarshalers.put(elementId, new IntegerArgumentMarshaler());
+				break;
+			}
+			case "##": {
+				localMarshalers.put(elementId, new DoubleArgumentMarshaler());
+				break;
+			}
+			case "[*]": {
+				localMarshalers.put(elementId, new StringArrayArgumentMarshaler());
+				break;
+			}
+			case "&": {
+				localMarshalers.put(elementId, new MapArgumentMarshaler());
+				break;
+			}
+			default: {
+				throw new ArgumentException(ErrorCode.INVALID_ARGUMENT_FORMAT, elementId, elementTail);
+			}
+			}
+
 		}
-		
+
 		return localMarshalers;
 	}
 
@@ -158,15 +177,18 @@ public class Argument {
 		return identfiedArguments.contains(arg);
 	}
 
-	public int nextArgument() {
+	public int nextArgumentIndex() {
 		return currentArgument.nextIndex();
 	}
 
-	private void validateElementId(final char elementId) throws ArgumentException {
+	private boolean isElementIdInvalid(final char elementId) throws ArgumentException {
+		boolean isInValid = false;
 
 		if (!Character.isLetter(elementId)) {
-			throw new ArgumentException(ErrorCode.INVALID_ARGUMENT_NAME, elementId, null);
+			isInValid = true;
 		}
+
+		return isInValid;
 
 	}
 }

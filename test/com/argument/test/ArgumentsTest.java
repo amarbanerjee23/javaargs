@@ -10,24 +10,12 @@ import com.argument.exception.ArgumentException;
 
 import static com.argument.exception.ArgumentException.ErrorCode.*;
 
-
-
 public class ArgumentsTest {
 
 	@Test
 	public void testWithNoSchemaAndNoArguments() throws Exception {
 		Argument args = new Argument("", new String[0]);
-		assertEquals(0, args.nextArgument());
-	}
-
-	@Test
-	public void testExceptionTypeWithNoSchemaAndOneArgument() throws Exception {
-		try {
-			new Argument("", new String[] { "-x" });
-			fail();
-		} catch (ArgumentException e) {
-			assertEquals(UNEXPECTED_ARGUMENT, e.getErrorCode());
-		}
+		assertEquals(0, args.nextArgumentIndex());
 	}
 
 	@Test
@@ -41,25 +29,23 @@ public class ArgumentsTest {
 	}
 
 	@Test
-	public void testExceptionTypeWithNoSchemaAndWithMultipleArguments() throws Exception {
+	public void testExceptionTypeForNoSchemaWithMultipleArguments() throws Exception {
 		try {
 			new Argument("", new String[] { "-x", "-y" });
-			fail("No schema is present for multiple arguments");
+			fail();
 		} catch (ArgumentException e) {
 			assertEquals(UNEXPECTED_ARGUMENT, e.getErrorCode());
 		}
-
 	}
 
 	@Test
-	public void testErrorArgIdWithNoSchemaAndWithMultipleArguments() throws Exception {
+	public void testErrorArgIdForNoSchemaWithMultipleArguments() throws Exception {
 		try {
 			new Argument("", new String[] { "-x", "-y" });
-			fail("No schema is present for multiple arguments");
+			fail();
 		} catch (ArgumentException e) {
 			assertEquals('x', e.getErrorArgumentId());
 		}
-
 	}
 
 	@Test
@@ -111,7 +97,7 @@ public class ArgumentsTest {
 	@Test
 	public void testIfSingleBooleanArgumentIsPresent() throws Exception {
 		Argument args = new Argument("x", new String[] { "-x" });
-		assertEquals(1, args.nextArgument());
+		assertEquals(1, args.nextArgumentIndex());
 	}
 
 	@Test
@@ -127,7 +113,7 @@ public class ArgumentsTest {
 
 	public void testSimpleStringArgumentHasTwoItems() throws Exception {
 		Argument args = new Argument("x*", new String[] { "-x", "param" });
-		assertEquals(2, args.nextArgument());
+		assertEquals(2, args.nextArgumentIndex());
 	}
 
 	@Test
@@ -155,16 +141,17 @@ public class ArgumentsTest {
 		Argument args = new Argument("x, y", new String[] { "-xy" });
 		assertTrue(args.hasArg('x'));
 	}
+
 	@Test
 	public void testArgsInFormatFor2ndArg() throws Exception {
 		Argument args = new Argument("x, y", new String[] { "-xy" });
 		assertTrue(args.hasArg('y'));
 	}
-	
+
 	@Test
 	public void testNextArgument() throws Exception {
 		Argument args = new Argument("x, y", new String[] { "-xy" });
-		assertEquals(1, args.nextArgument());
+		assertEquals(1, args.nextArgumentIndex());
 	}
 
 	@Test
@@ -172,20 +159,21 @@ public class ArgumentsTest {
 		Argument args = new Argument("x#", new String[] { "-x", "42" });
 		assertTrue(args.hasArg('x'));
 		assertEquals(42, args.getInt('x'));
-		assertEquals(2, args.nextArgument());
+		assertEquals(2, args.nextArgumentIndex());
 	}
-	
+
 	@Test
 	public void testValueForSimpleIntArgument() throws Exception {
 		Argument args = new Argument("x#", new String[] { "-x", "42" });
 		assertTrue(args.hasArg('x'));
 		assertEquals(42, args.getInt('x'));
 	}
+
 	@Test
 	public void testNumberOfArgsInSimpleIntArgument() throws Exception {
 		Argument args = new Argument("x#", new String[] { "-x", "42" });
 		assertTrue(args.hasArg('x'));
-		assertEquals(2, args.nextArgument());
+		assertEquals(2, args.nextArgumentIndex());
 	}
 
 	@Test
@@ -198,7 +186,7 @@ public class ArgumentsTest {
 		}
 
 	}
-	
+
 	@Test
 	public void testErrorArgIdForInvalidIntegerArgument() throws Exception {
 		try {
@@ -209,7 +197,7 @@ public class ArgumentsTest {
 		}
 
 	}
-	
+
 	@Test
 	public void testErrorParameterIdForInvalidIntegerArgument() throws Exception {
 		try {
@@ -220,7 +208,7 @@ public class ArgumentsTest {
 		}
 
 	}
-	
+
 	@Test
 	public void testErrorParameterForInvalidIntegerArgument() throws Exception {
 		try {
@@ -241,7 +229,7 @@ public class ArgumentsTest {
 			assertEquals(MISSING_INTEGER, e.getErrorCode());
 		}
 	}
-	
+
 	@Test
 	public void testErrorArgIdForMissingIntegerArgument() throws Exception {
 		try {
@@ -257,7 +245,7 @@ public class ArgumentsTest {
 		Argument args = new Argument("x##", new String[] { "-x", "42.3" });
 		assertTrue(args.hasArg('x'));
 	}
-	
+
 	@Test
 	public void testValueForSimpleDoubleArgument() throws Exception {
 		Argument args = new Argument("x##", new String[] { "-x", "42.3" });
@@ -273,7 +261,7 @@ public class ArgumentsTest {
 			assertEquals(INVALID_DOUBLE, e.getErrorCode());
 		}
 	}
-	
+
 	@Test
 	public void testErrorArgIdForInvalidDoubleArgumet() throws Exception {
 		try {
@@ -283,7 +271,7 @@ public class ArgumentsTest {
 			assertEquals('x', e.getErrorArgumentId());
 		}
 	}
-	
+
 	@Test
 	public void testErrorParameterForInvalidDoubleArgumet() throws Exception {
 		try {
@@ -303,6 +291,7 @@ public class ArgumentsTest {
 			assertEquals(MISSING_DOUBLE, e.getErrorCode());
 		}
 	}
+
 	@Test
 	public void testErrorArgIdForMissingDoubleArgument() throws Exception {
 		try {
@@ -318,21 +307,21 @@ public class ArgumentsTest {
 		Argument args = new Argument("x[*]", new String[] { "-x", "alpha" });
 		assertTrue(args.hasArg('x'));
 	}
-	
+
 	@Test
 	public void testValueArrayLengthForStringArrayArgument() throws Exception {
 		Argument args = new Argument("x[*]", new String[] { "-x", "alpha" });
 		String[] result = args.getStringArray('x');
 		assertEquals(1, result.length);
 	}
-	
+
 	@Test
 	public void testArraylengthForStringArrayArgument() throws Exception {
 		Argument args = new Argument("x[*]", new String[] { "-x", "alpha" });
 		String[] result = args.getStringArray('x');
 		assertEquals(1, result.length);
 	}
-	
+
 	@Test
 	public void testArrayValueForStringArrayArgument() throws Exception {
 		Argument args = new Argument("x[*]", new String[] { "-x", "alpha" });
@@ -355,7 +344,7 @@ public class ArgumentsTest {
 		Argument args = new Argument("x[*]", new String[] { "-x", "alpha", "-x", "beta", "-x", "gamma" });
 		assertTrue(args.hasArg('x'));
 	}
-	
+
 	@Test
 	public void testArrayLengthForStringArrayElements() throws Exception {
 		Argument args = new Argument("x[*]", new String[] { "-x", "alpha", "-x", "beta", "-x", "gamma" });
@@ -368,7 +357,7 @@ public class ArgumentsTest {
 		Argument args = new Argument("f&", new String[] { "-f", "key1:val1,key2:val2" });
 		assertTrue(args.hasArg('f'));
 	}
-	
+
 	@Test
 	public void testKeysAndValuesForMapArgument() throws Exception {
 		Argument args = new Argument("f&", new String[] { "-f", "key1:val1,key2:val2" });
@@ -378,25 +367,8 @@ public class ArgumentsTest {
 	}
 
 	@Test(expected = ArgumentException.class)
-	public void testExceptionTypeForMalformedMapArgument() throws Exception {
-		try {
-			new Argument("f&", new String[] { "-f", "key1:val1,key2" });
-			fail();
-		} catch (ArgumentException e) {
-			assertEquals(MALFORMED_MAP, e.getErrorCode());
-
-		}
-	}
-	
-	@Test(expected = ArgumentException.class)
-	public void testErrorArgIdForMalformedMapArgument() throws Exception {
-		try {
-			new Argument("f&", new String[] { "-f", "key1:val1,key2" });
-			fail();
-		} catch (ArgumentException e) {
-			assertEquals('f', e.getErrorArgumentId());
-
-		}
+	public void testExceptionTypeForMalormedMapArgument() throws Exception {
+		new Argument("f&", new String[] { "-f", "key1:val1,key2" });
 	}
 
 	@Test
@@ -404,6 +376,7 @@ public class ArgumentsTest {
 		Argument args = new Argument("f&", new String[] { "-f", "key1:val1" });
 		assertTrue(args.hasArg('f'));
 	}
+
 	@Test
 	public void testSingleKeyValuePairForMapArgument() throws Exception {
 		Argument args = new Argument("f&", new String[] { "-f", "key1:val1" });
@@ -416,17 +389,17 @@ public class ArgumentsTest {
 		Argument args = new Argument("x,y*", new String[] { "-x", "-y", "alpha", "beta" });
 		assertTrue(args.getBoolean('x'));
 	}
-	
+
 	@Test
 	public void testExtraArgumentsForStringArgs() throws Exception {
 		Argument args = new Argument("x,y*", new String[] { "-x", "-y", "alpha", "beta" });
 		assertEquals("alpha", args.getString('y'));
 	}
-	
+
 	@Test
 	public void testIf4thArgExists() throws Exception {
 		Argument args = new Argument("x,y*", new String[] { "-x", "-y", "alpha", "beta" });
-		assertEquals(3, args.nextArgument());
+		assertEquals(3, args.nextArgumentIndex());
 	}
 
 	@Test
@@ -434,28 +407,29 @@ public class ArgumentsTest {
 		Argument args = new Argument("x,y", new String[] { "-x", "alpha", "-y", "beta" });
 		assertTrue(args.hasArg('x'));
 	}
-	
+
 	@Test
 	public void testExtraArgumentsThatLookLikeFlagsFor2ndrg() throws Exception {
 		Argument args = new Argument("x,y", new String[] { "-x", "alpha", "-y", "beta" });
 		assertFalse(args.hasArg('y'));
 	}
+
 	@Test
 	public void testBooleanValueFor1stArg() throws Exception {
 		Argument args = new Argument("x,y", new String[] { "-x", "alpha", "-y", "beta" });
 		assertTrue(args.getBoolean('x'));
 	}
-	
+
 	@Test
 	public void testBooleanValueFor2ndArg() throws Exception {
 		Argument args = new Argument("x,y", new String[] { "-x", "alpha", "-y", "beta" });
 		assertFalse(args.getBoolean('y'));
-		assertEquals(1, args.nextArgument());
+		assertEquals(1, args.nextArgumentIndex());
 	}
-	
+
 	@Test
 	public void testIf2ndArgExists() throws Exception {
 		Argument args = new Argument("x,y", new String[] { "-x", "alpha", "-y", "beta" });
-		assertEquals(1, args.nextArgument());
+		assertEquals(1, args.nextArgumentIndex());
 	}
 }

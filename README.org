@@ -1,5 +1,5 @@
-#+TITLE Assignment 1
- The Art of Clean Code
+#+TITLE
+ Assignment 1 -  The Art of Clean Code
 #+AUTHOR
 Amar Banerjee
 Roll No. 2018801016

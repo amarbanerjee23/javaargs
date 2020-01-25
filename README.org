@@ -7,7 +7,7 @@ Software Engineering - Spring 2019
 
 ** Disclaimer
 
-This code has been orginally forked from the Args program described in: http://butunclebob.com/ArticleS.UncleBob.CleanCodeArgs. I have further tried
+This code has been originally forked from the Args program described in: http://butunclebob.com/ArticleS.UncleBob.CleanCodeArgs. I have further tried
 to implement a clean coding practice on this source code written in Java.
 
 * Usage 
@@ -51,31 +51,31 @@ For the ease of coding, I have used Eclipse IDE as the development environment.
  - char[*] - one element of a string array.
 
 Example schema: (f,s*,n#,a##,p[*])
-Coresponding command line: "-f -s Bob -n 1 -a 3.2 -p e1 -p e2 -p e3
+Corresponding command line: "-f -s Bob -n 1 -a 3.2 -p e1 -p e2 -p e3
 
 * Clean Code Practices
 
-The source code makes use of the following clean coding prcatices:-
+The source code makes use of the following clean coding practices:-
 
 ** Clean Code Practices in Source Code
 
 *** Package
-+ The package names are named to convey the semantic categorisation for the classes inside the package.
-+ Classes addressing different aspects have been seperated by packages( The classes defining exceptions,marshallers and arguments
- are kept in a seperate packages), to enable modularity and seperation of concerns.
++ The package names are named to convey the semantic categorization for the classes inside the package.
++ Classes addressing different aspects have been separated by packages( The classes defining exceptions, marshallers and arguments
+ are kept in a separate packages), to enable modularity and separation of concerns.
 
 *** Imports
-+ The imports inside the classes have been seperated into groups in the order.
++ The imports inside the classes have been separated into groups in the order.
   - java libraries import
   - java libraries static import
   - local libraries
   - local libraries static imports
 
-+ The imports are again ordered alphabetically to enable ease of reading and uderstanding the dependencies of the classes.
++ The imports are again ordered alphabetically to enable ease of reading and understanding the dependencies of the classes.
 
 *** Class / Interface Name
 + The class interfaces names have been named to convey the semantic meaning of the operations / functions defined in the class.
-+ The interface names start with an /"I"/ to denote that the file contains the definition of an interface.
++ The interface names start with an "I" to denote that the file contains the definition of an interface.
 
 *** Variables
 + The variables declared in the classes are arranged alphabetically, so enable reviewer go through each variable in sequence.
@@ -91,15 +91,14 @@ The source code makes use of the following clean coding prcatices:-
  in the function.
 + Every statement for variable declaration, data assignment, function call has been spaced to enable the reader to easily identify the order of
 execution.
-+ All logical, loop and switch constructs have been seperated from the single line operational code, to create a direct seperation of concerns.
++ All logical, loop and switch constructs have been separated from the single line operational code, to create a direct separation of concerns.
 + All methods are sorted in the following order of precedence
   - The order in which the functions are invoked. For e.g., if A invokes B and B invokes C, then the order of the functions in the class will be
     A - B - C
   - If there is no explicit order of the function within the class (As in the cases of POJO Bean classes having only getter and setter), then 
     the methods are ordered alphabetically to enable ease of reading and understanding the function.
-+ The methods are defined with not more than 2 parameters, hence reducing data inflow and cross cutting complexity.
++ The methods are defined with not more than 2 parameters, hence reducing data-inflow and cross cutting complexity.
 + For the methods which return a value, the returned variable name is kept consistent with the method objective to enable 
-intutive realisation of the returned value and its meaning
-+ Multiple / nested if-else constructs, have been replaced by switch statements, to enable better understading of multiple consitional blocks.
-+ 
+better realization of the returned value and its meaning
++ Multiple / nested if-else constructs, have been replaced by switch statements, to enable better understanding of multiple consitional blocks.
 
